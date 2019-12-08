@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.heling.mapper.AirInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.heling.model.AirInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="air_line" property="airLine" jdbcType="VARCHAR" />
+    <result column="left_ticket_num" property="leftTicketNum" jdbcType="INTEGER" />
+    <result column="fr" property="fr" jdbcType="VARCHAR" />
+    <result column="des" property="des" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, air_line, left_ticket_num, fr, des
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from air_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from air_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.heling.model.AirInfo" >
+    insert into air_info (id, air_line, left_ticket_num, 
+      fr, des)
+    values (#{id,jdbcType=INTEGER}, #{airLine,jdbcType=VARCHAR}, #{leftTicketNum,jdbcType=INTEGER}, 
+      #{fr,jdbcType=VARCHAR}, #{des,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.heling.model.AirInfo" >
+    insert into air_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="airLine != null" >
+        air_line,
+      </if>
+      <if test="leftTicketNum != null" >
+        left_ticket_num,
+      </if>
+      <if test="fr != null" >
+        fr,
+      </if>
+      <if test="des != null" >
+        to,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="airLine != null" >
+        #{airLine,jdbcType=VARCHAR},
+      </if>
+      <if test="leftTicketNum != null" >
+        #{leftTicketNum,jdbcType=INTEGER},
+      </if>
+      <if test="fr != null" >
+        #{fr,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null" >
+        #{to,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.heling.model.AirInfo" >
+    update air_info
+    <set >
+      <if test="airLine != null" >
+        air_line = #{airLine,jdbcType=VARCHAR},
+      </if>
+      <if test="leftTicketNum != null" >
+        left_ticket_num = #{leftTicketNum,jdbcType=INTEGER},
+      </if>
+      <if test="fr != null" >
+        fr = #{fr,jdbcType=VARCHAR},
+      </if>
+      <if test="des != null" >
+        des = #{des,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.heling.model.AirInfo" >
+    update air_info
+    set air_line = #{airLine,jdbcType=VARCHAR},
+      left_ticket_num = #{leftTicketNum,jdbcType=INTEGER},
+      fr = #{fr,jdbcType=VARCHAR},
+      des = #{des,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByAirLine" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from air_info
+    where air_line = #{airLine} limit 1 for update
+  </select>
+</mapper>
